@@ -14,7 +14,6 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // ✅ FINAL API LINK UPDATED
         const API_URL = "https://sheetdb.io/api/v1/i48qhzrs0jwvm";
 
         const SLOT_DATA = [
@@ -72,17 +71,13 @@
             const [curr, setCurr] = useState(null);
             const [loading, setLoading] = useState(true);
 
-            // 🔄 REAL-TIME SYNC (Har 5 second mein)
             const syncData = async () => {
                 try {
                     const r = await fetch(`${API_URL}?t=${new Date().getTime()}`);
                     const d = await r.json();
-                    
                     const now = new Date().getTime();
                     const eighteenHours = 18 * 60 * 60 * 1000;
-                    // Filter: Jo pichle 18 ghante ke hain wahi slots blocked dikhao
                     const validData = Array.isArray(d) ? d.filter(item => !item.timestamp || (now - parseInt(item.timestamp) < eighteenHours)) : [];
-                    
                     setDbData(validData);
                 } catch(e) { console.error("Sync Error", e); }
                 setLoading(false);
@@ -96,9 +91,8 @@
 
             const saveBooking = async () => {
                 if (!sel) return alert("Please select a Time Slot!");
-                if (!/^[6-9]\d{9}$/.test(form.ph)) return alert("Enter valid 10-digit mobile number!");
-                if (form.fn.length < 2) return alert("Enter proper First Name!");
-                if (parseInt(form.members) > 20) return alert("Max 20 members allowed!");
+                if (form.ph.length < 1) return alert("Enter Mobile Number!");
+                if (form.fn.length < 1) return alert("Enter Name!");
 
                 setLoading(true);
                 const booking = {
@@ -123,7 +117,7 @@
                         setDone(true);
                         syncData();
                     }
-                } catch(e) { alert("Server connection error!"); }
+                } catch(e) { alert("Server error!"); }
                 setLoading(false);
             };
 
@@ -131,7 +125,6 @@
                 <div className="app">
                     <style>{css}</style>
                     <div className="header"><h1>Gandhi Museum <em>VR Show</em></h1></div>
-
                     <div className="slot-section">
                         <p style={{fontSize:9, color:'var(--gold)', textAlign:'center', marginBottom:12, letterSpacing:2}}>SELECT SLOT (07:00 AM - 06:30 PM)</p>
                         <div className="slot-grid">
@@ -164,7 +157,7 @@
                                         <div className="input-item"><label>Last Name</label><input placeholder="Last Name" onChange={e=>setForm({...form, ln:e.target.value})} /></div>
                                     </div>
                                     <div className="input-row">
-                                        <div className="input-item"><label>Mobile</label><input maxLength="10" placeholder="98XXXXXXXX" onChange={e=>setForm({...form, ph:e.target.value})} /></div>
+                                        <div className="input-item"><label>Mobile</label><input placeholder="98XXXXXXXX" onChange={e=>setForm({...form, ph:e.target.value})} /></div>
                                         <div className="input-item"><label>Members (Max 20)</label><input type="number" max="20" placeholder="1-20" onChange={e=>setForm({...form, members:e.target.value})} /></div>
                                     </div>
                                     <div className="input-item"><label>Email (Optional)</label><input placeholder="Email" onChange={e=>setForm({...form, em:e.target.value})} /></div>
