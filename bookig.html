@@ -14,8 +14,8 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // ✅ AAPKI NAYI API LINK YAHAN HAI
-        const API_URL = "https://sheetdb.io/api/v1/hasup370nw2d1";
+        // ✅ FINAL API LINK UPDATED
+        const API_URL = "https://sheetdb.io/api/v1/i48qhzrs0jwvm";
 
         const SLOT_DATA = [
             { id: 1, time: "07:00 AM" }, { id: 2, time: "07:30 AM" },
@@ -72,7 +72,7 @@
             const [curr, setCurr] = useState(null);
             const [loading, setLoading] = useState(true);
 
-            // 🔄 REAL-TIME SYNC (Every 10 seconds)
+            // 🔄 REAL-TIME SYNC (Har 5 second mein)
             const syncData = async () => {
                 try {
                     const r = await fetch(`${API_URL}?t=${new Date().getTime()}`);
@@ -80,23 +80,25 @@
                     
                     const now = new Date().getTime();
                     const eighteenHours = 18 * 60 * 60 * 1000;
-                    const validData = d.filter(item => !item.timestamp || (now - parseInt(item.timestamp) < eighteenHours));
+                    // Filter: Jo pichle 18 ghante ke hain wahi slots blocked dikhao
+                    const validData = Array.isArray(d) ? d.filter(item => !item.timestamp || (now - parseInt(item.timestamp) < eighteenHours)) : [];
                     
                     setDbData(validData);
-                } catch(e) { console.error("Sync failed", e); }
+                } catch(e) { console.error("Sync Error", e); }
                 setLoading(false);
             };
 
             useEffect(() => {
                 syncData();
-                const interval = setInterval(syncData, 10000); 
+                const interval = setInterval(syncData, 5000); 
                 return () => clearInterval(interval);
             }, []);
 
             const saveBooking = async () => {
                 if (!sel) return alert("Please select a Time Slot!");
-                if (form.ph.length !== 10) return alert("Enter 10-digit mobile number!");
-                if (parseInt(form.members) > 20) return alert("Maximum 20 members allowed!");
+                if (!/^[6-9]\d{9}$/.test(form.ph)) return alert("Enter valid 10-digit mobile number!");
+                if (form.fn.length < 2) return alert("Enter proper First Name!");
+                if (parseInt(form.members) > 20) return alert("Max 20 members allowed!");
 
                 setLoading(true);
                 const booking = {
@@ -107,7 +109,7 @@
                     email: form.em || "N/A",
                     members: form.members,
                     slotId: sel.id,
-                    timestamp: new Date().getTime() // Column H check karna!
+                    timestamp: new Date().getTime()
                 };
 
                 try {
@@ -166,7 +168,7 @@
                                         <div className="input-item"><label>Members (Max 20)</label><input type="number" max="20" placeholder="1-20" onChange={e=>setForm({...form, members:e.target.value})} /></div>
                                     </div>
                                     <div className="input-item"><label>Email (Optional)</label><input placeholder="Email" onChange={e=>setForm({...form, em:e.target.value})} /></div>
-                                    <button className="book-btn" onClick={saveBooking}>{loading ? "WAIT..." : "Confirm Booking →"}</button>
+                                    <button className="book-btn" onClick={saveBooking}>{loading ? "PROCESSING..." : "Confirm Booking →"}</button>
                                 </>
                             ) : (
                                 <div>
