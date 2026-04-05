@@ -14,7 +14,8 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        const API_URL = "https://sheetdb.io/api/v1/rolrp46ju7n6y";
+        // ✅ AAPKI NAYI API LINK YAHAN HAI
+        const API_URL = "https://sheetdb.io/api/v1/hasup370nw2d1";
 
         const SLOT_DATA = [
             { id: 1, time: "07:00 AM" }, { id: 2, time: "07:30 AM" },
@@ -37,34 +38,24 @@
         :root { --saffron:#D4651A; --gold:#C4901E; --deep:#0D0A06; --khadi:#F4EDD8; --green:#4CAF50; --red:#FF3D3D; }
         body { background: var(--deep); color: var(--khadi); font-family: 'Rajdhani', sans-serif; }
         .app { min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:20px; background: radial-gradient(circle at top, rgba(212,101,26,0.1), transparent); }
-        
         .header { width:100%; max-width:850px; text-align:center; margin-bottom:15px; border-bottom:1px solid rgba(212,101,26,0.2); padding-bottom:10px; }
         .header h1 { font-family:'Playfair Display'; font-size:26px; }
-
-        /* 🕒 Timer Styling */
-        .timer-box { background: rgba(212,101,26,0.15); border: 1px solid var(--saffron); padding: 5px 12px; border-radius: 20px; color: var(--saffron); font-weight: 700; display: inline-block; margin-top: 10px; font-size: 14px; letter-spacing: 1px; }
-
         .slot-section { width:100%; max-width:850px; background:rgba(255,255,255,0.02); border:1px solid rgba(212,101,26,0.3); padding:15px; border-radius:10px; margin-bottom:20px; }
         .slot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); gap: 8px; max-height: 220px; overflow-y: auto; padding: 10px; }
-        .slot-box { display:flex; flex-direction:column; align-items:center; cursor:pointer; }
-        .circle { width:36px; height:36px; border-radius:50%; border:2px solid; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12px; margin-bottom:3px; }
-        .circle.free { border-color:var(--green); color:var(--green); }
+        .circle { width:36px; height:36px; border-radius:50%; border:2px solid; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12px; margin-bottom:3px; transition: 0.3s; }
+        .circle.free { border-color:var(--green); color:var(--green); cursor:pointer; }
         .circle.booked { border-color:#444; color:#444; cursor:not-allowed; background:rgba(255,255,255,0.05); }
         .circle.selected { border-color:var(--saffron); background:var(--saffron); color:var(--deep); box-shadow:0 0 10px var(--saffron); }
         .time-label { font-size:8px; color:var(--gold); font-weight:700; text-align:center; }
-
         .tabs { display:flex; width:100%; max-width:850px; margin-bottom:20px; background:rgba(255,255,255,0.05); }
         .tab-btn { flex:1; padding:15px; border:none; background:transparent; color:rgba(244,237,216,0.4); cursor:pointer; font-weight:700; text-transform:uppercase; font-size:11px; }
         .tab-btn.active { background:var(--saffron); color:var(--deep); }
-
         .content-card { width:100%; max-width:850px; background:rgba(255,255,255,0.03); border:1px solid rgba(212,101,26,0.2); padding:25px; border-radius:8px; }
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom:15px; }
         @media (max-width: 500px) { .input-row { grid-template-columns: 1fr; } }
-        .input-item { margin-bottom:10px; }
         .input-item label { display:block; font-size:9px; color:var(--gold); text-transform:uppercase; margin-bottom:4px; }
         .input-item input { width:100%; padding:11px; background:rgba(0,0,0,0.4); border:1px solid rgba(212,101,26,0.2); color:white; border-radius:4px; outline:none; font-size:14px; }
         .book-btn { width:100%; padding:16px; background:var(--saffron); border:none; color:var(--deep); font-weight:800; text-transform:uppercase; cursor:pointer; border-radius:4px; }
-        
         .help-card { background:rgba(212,101,26,0.05); border:1px solid rgba(212,101,26,0.2); padding:15px 20px; margin-bottom:12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; }
         .num-box { background: var(--saffron); color: var(--deep); padding: 8px 15px; border-radius: 5px; font-weight: 800; text-decoration: none; font-size: 15px; }
         .ticket-box { border:2px solid var(--saffron); padding:25px; text-align:center; max-width:360px; margin:0 auto; background:var(--deep); border-radius:10px; }
@@ -80,83 +71,64 @@
             const [done, setDone] = useState(false);
             const [curr, setCurr] = useState(null);
             const [loading, setLoading] = useState(true);
-            const [countdown, setCountdown] = useState("");
 
-            // 🕒 Live Countdown Logic
-            useEffect(() => {
-                const timer = setInterval(() => {
-                    const now = new Date();
-                    const target = new Date();
-                    target.setHours(18, 30, 0); // Reset Target: 6:30 PM
-
-                    if (now > target) {
-                        target.setDate(target.getDate() + 1);
-                    }
-
-                    const diff = target - now;
-                    const h = Math.floor(diff / 3600000).toString().padStart(2, '0');
-                    const m = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
-                    const s = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
-                    
-                    setCountdown(`${h}:${m}:${s}`);
-                }, 1000);
-                return () => clearInterval(timer);
-            }, []);
-
-            const refresh = async () => {
+            // 🔄 REAL-TIME SYNC (Every 10 seconds)
+            const syncData = async () => {
                 try {
-                    const r = await fetch(API_URL);
+                    const r = await fetch(`${API_URL}?t=${new Date().getTime()}`);
                     const d = await r.json();
                     
-                    const now = new Date();
-                    const h = now.getHours();
-                    const m = now.getMinutes();
-                    const currentTime = h + m/60;
-
-                    if (currentTime >= 18.5 || currentTime < 7) {
-                        setDbData([]);
-                    } else {
-                        setDbData(d || []);
-                    }
-                } catch(e) { console.error(e); }
+                    const now = new Date().getTime();
+                    const eighteenHours = 18 * 60 * 60 * 1000;
+                    const validData = d.filter(item => !item.timestamp || (now - parseInt(item.timestamp) < eighteenHours));
+                    
+                    setDbData(validData);
+                } catch(e) { console.error("Sync failed", e); }
                 setLoading(false);
             };
 
-            useEffect(() => { refresh(); }, []);
+            useEffect(() => {
+                syncData();
+                const interval = setInterval(syncData, 10000); 
+                return () => clearInterval(interval);
+            }, []);
 
             const saveBooking = async () => {
                 if (!sel) return alert("Please select a Time Slot!");
                 if (form.ph.length !== 10) return alert("Enter 10-digit mobile number!");
-                if (parseInt(form.members) > 20) return alert("Max 20 members allowed!");
+                if (parseInt(form.members) > 20) return alert("Maximum 20 members allowed!");
 
                 setLoading(true);
                 const booking = {
                     id: Math.floor(100000 + Math.random()*900000),
-                    firstName: form.fn, lastName: form.ln,
-                    phone: form.ph, email: form.em || "N/A",
-                    members: form.members, slotId: sel.id
+                    firstName: form.fn,
+                    lastName: form.ln,
+                    phone: form.ph,
+                    email: form.em || "N/A",
+                    members: form.members,
+                    slotId: sel.id,
+                    timestamp: new Date().getTime() // Column H check karna!
                 };
 
                 try {
-                    await fetch(API_URL, {
+                    const res = await fetch(API_URL, {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify({ data: [booking] })
                     });
-                    setCurr(booking);
-                    setDone(true);
-                    refresh();
-                } catch(e) { alert("Server error!"); }
+                    if(res.ok) {
+                        setCurr(booking);
+                        setDone(true);
+                        syncData();
+                    }
+                } catch(e) { alert("Server connection error!"); }
                 setLoading(false);
             };
 
             return (
                 <div className="app">
                     <style>{css}</style>
-                    <div className="header">
-                        <h1>Gandhi Museum <em>VR Show</em></h1>
-                        <div className="timer-box">⏳ RESET IN: {countdown}</div>
-                    </div>
+                    <div className="header"><h1>Gandhi Museum <em>VR Show</em></h1></div>
 
                     <div className="slot-section">
                         <p style={{fontSize:9, color:'var(--gold)', textAlign:'center', marginBottom:12, letterSpacing:2}}>SELECT SLOT (07:00 AM - 06:30 PM)</p>
@@ -186,15 +158,15 @@
                             !done ? (
                                 <>
                                     <div className="input-row">
-                                        <div className="input-item"><label>First Name</label><input placeholder="Ex: Mohandas" onChange={e=>setForm({...form, fn:e.target.value})} /></div>
-                                        <div className="input-item"><label>Last Name</label><input placeholder="Ex: Gandhi" onChange={e=>setForm({...form, ln:e.target.value})} /></div>
+                                        <div className="input-item"><label>First Name</label><input placeholder="First Name" onChange={e=>setForm({...form, fn:e.target.value})} /></div>
+                                        <div className="input-item"><label>Last Name</label><input placeholder="Last Name" onChange={e=>setForm({...form, ln:e.target.value})} /></div>
                                     </div>
                                     <div className="input-row">
                                         <div className="input-item"><label>Mobile</label><input maxLength="10" placeholder="98XXXXXXXX" onChange={e=>setForm({...form, ph:e.target.value})} /></div>
-                                        <div className="input-item"><label>Total Members (Max 20)</label><input type="number" min="1" max="20" placeholder="Members" onChange={e=>setForm({...form, members:e.target.value})} /></div>
+                                        <div className="input-item"><label>Members (Max 20)</label><input type="number" max="20" placeholder="1-20" onChange={e=>setForm({...form, members:e.target.value})} /></div>
                                     </div>
-                                    <div className="input-item"><label>Email (Optional)</label><input placeholder="gandhi@example.com" onChange={e=>setForm({...form, em:e.target.value})} /></div>
-                                    <button className="book-btn" onClick={saveBooking}>{loading ? "PROCESSING..." : "Confirm Booking →"}</button>
+                                    <div className="input-item"><label>Email (Optional)</label><input placeholder="Email" onChange={e=>setForm({...form, em:e.target.value})} /></div>
+                                    <button className="book-btn" onClick={saveBooking}>{loading ? "WAIT..." : "Confirm Booking →"}</button>
                                 </>
                             ) : (
                                 <div>
@@ -202,15 +174,16 @@
                                     <div className="ticket-box">
                                         <p style={{fontSize:9, color:'var(--gold)'}}>PASS ID: #{curr.id}</p>
                                         <h2 style={{margin:'10px 0', fontFamily:'Playfair Display'}}>{curr.firstName} {curr.lastName}</h2>
-                                        <div style={{color:'var(--saffron)', fontWeight:700, fontSize:18}}>🕐 {SLOT_DATA.find(s=>s.id===curr.slotId)?.time}</div>
-                                        <p style={{marginTop:10, fontSize:12}}>Total Members: <strong>{curr.members}</strong></p>
+                                        <div style={{color:'var(--saffron)', fontWeight:700, fontSize:22}}>🕐 {SLOT_DATA.find(s=>s.id===curr.slotId)?.time}</div>
+                                        <p style={{marginTop:10, fontSize:13}}>Members: <strong>{curr.members}</strong></p>
                                     </div>
                                     <button style={{marginTop:20, width:'100%', background:'none', border:'1px solid #444', color:'#888', padding:10}} onClick={()=>window.location.reload()}>+ NEW BOOKING</button>
                                 </div>
                             )
                         ) : tab === 'rec' ? (
                             <div>
-                                {dbData.map((b, i) => (
+                                {dbData.length === 0 ? <p style={{textAlign:'center', color:'#555'}}>No active bookings.</p> : 
+                                dbData.map((b, i) => (
                                     <div key={i} style={{display:'flex', justifyContent:'space-between', padding:'12px', borderBottom:'1px solid #222', fontSize:13}}>
                                         <span>{b.firstName} {b.lastName} ({b.members || 1})</span>
                                         <span style={{color:'var(--saffron)', fontWeight:'bold'}}>{SLOT_DATA.find(s=>s.id==parseInt(b.slotId))?.time}</span>
