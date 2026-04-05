@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gandhi Museum VR Experience — Rajkot</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --saffron: #E8722A;
+    --saffron-light: #F5A462;
+    --deep: #1A1008;
+    --khadi: #F5EDD8;
+    --khadi-dark: #E8D9B8;
+    --brown: #3D2B0F;
+    --gold: #C9962F;
+    --gold-light: #E8C76A;
+    --text-dark: #1A1008;
+    --text-mid: #4A3218;
+    --text-light: #8B6040;
+    --white: #FDFAF4;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    background: #111;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 32px 16px;
+  }
+
+  /* ── PAGE SHELL ── */
+  .page {
+    width: 794px;
+    background: var(--khadi);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+    page-break-after: always;
+  }
+
+  /* ─────────────────────────────────────────
+     PAGE 1 — COVER
+  ───────────────────────────────────────── */
+  .p1 {
+    height: 560px;
+    background: var(--deep);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .p1-left {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .p1-left-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.55;
+    filter: sepia(40%) contrast(1.1);
+  }
+
+  .p1-left-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(232,114,42,0.35) 0%, rgba(26,16,8,0.7) 100%);
+  }
+
+  .p1-left-text {
+    position: absolute;
+    bottom: 40px; left: 36px; right: 20px;
+  }
+
+  .p1-left-text .tag {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--saffron-light);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .p1-left-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px;
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--khadi);
+  }
+
+  .p1-left-text h1 em {
+    color: var(--saffron);
+    font-style: italic;
+  }
+
+  .p1-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px 40px;
+    position: relative;
+  }
+
+  .p1-right::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    border: 2px solid rgba(232,114,42,0.2);
+  }
+
+  .p1-right::after {
+    content: '';
+    position: absolute;
+    bottom: 30px; left: 30px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,150,47,0.25);
+  }
+
+  .p1-right .eyebrow {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--saffron);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .p1-right h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--khadi);
+    line-height: 1.4;
+    margin-bottom: 24px;
+  }
+
+  .p1-right p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14.5px;
+    color: rgba(245,237,216,0.65);
+    line-height: 1.75;
+    margin-bottom: 32px;
+  }
+
+  .badge-vr {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--saffron);
+    color: var(--deep);
+    padding: 10px 20px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .badge-vr svg { width: 18px; height: 18px; }
+
+  .langs-strip {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(201,150,47,0.12);
+    border-top: 1px solid rgba(201,150,47,0.2);
+    padding: 10px 40px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+  }
+
+  .langs-strip span {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gold-light);
+    opacity: 0.7;
+    text-transform: uppercase;
+  }
+
+  .langs-strip .dot { width: 3px; height: 3px; background: var(--saffron); border-radius: 50%; opacity: 0.5; }
+
+  /* ─────────────────────────────────────────
+     PAGE 2 — THE PROBLEM / INSIGHT
+  ───────────────────────────────────────── */
+  .p2 {
+    height: 500px;
+    display: grid;
+    grid-template-columns: 55% 45%;
+  }
+
+  .p2-left {
+    background: var(--brown);
+    padding: 52px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .p2-left::before {
+    content: '"';
+    position: absolute;
+    top: -20px; left: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 220px;
+    color: rgba(232,114,42,0.08);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .p2-left .section-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--saffron);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .p2-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--khadi);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .p2-left p {
+    font-size: 15px;
+    color: rgba(245,237,216,0.7);
+    line-height: 1.85;
+  }
+
+  .p2-left .highlight-line {
+    margin-top: 28px;
+    border-left: 3px solid var(--saffron);
+    padding-left: 18px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--saffron-light);
+    line-height: 1.5;
+  }
+
+  .p2-right {
+    background: var(--khadi-dark);
+    padding: 52px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    justify-content: center;
+  }
+
+  .insight-card {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .insight-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--saffron);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 36px;
+  }
+
+  .insight-card h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--brown);
+    margin-bottom: 4px;
+  }
+
+  .insight-card p {
+    font-size: 13.5px;
+    color: var(--text-mid);
+    line-height: 1.7;
+  }
+
+  /* ─────────────────────────────────────────
+     PAGE 3 — VR SOLUTION
+  ───────────────────────────────────────── */
+  .p3 {
+    height: 560px;
+    background: var(--deep);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+  }
+
+  .p3-bg-circle {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    border: 1px solid rgba(232,114,42,0.08);
+    pointer-events: none;
+  }
+
+  .p3-bg-circle2 {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 550px; height: 550px;
+    border-radius: 50%;
+    border: 1px solid rgba(232,114,42,0.04);
+    pointer-events: none;
+  }
+
+  .p3-left {
+    padding: 52px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .p3-left .section-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .p3-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: var(--khadi);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  .p3-left h2 span {
+    color: var(--saffron);
+    font-style: italic;
+  }
+
+  .p3-left .sub {
+    font-size: 15px;
+    color: rgba(245,237,216,0.55);
+    line-height: 1.8;
+    margin-bottom: 36px;
+  }
+
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .feat-item {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .feat-icon {
+    width: 38px; height: 38px;
+    background: rgba(232,114,42,0.12);
+    border: 1px solid rgba(232,114,42,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+
+  .feat-item p {
+    font-size: 13.5px;
+    color: rgba(245,237,216,0.7);
+    line-height: 1.5;
+  }
+
+  .feat-item p strong {
+    color: var(--saffron-light);
+    display: block;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .p3-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .vr-visual {
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, rgba(232,114,42,0.3) 0%, rgba(26,16,8,0.8) 70%);
+    border: 2px solid rgba(232,114,42,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+  }
+
+  .vr-visual::before {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    border: 1px dashed rgba(232,114,42,0.2);
+  }
+
+  .vr-visual .vr-icon {
+    font-size: 52px;
+    line-height: 1;
+  }
+
+  .vr-visual .vr-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: var(--gold-light);
+    font-style: italic;
+    text-align: center;
+    padding: 0 20px;
+    line-height: 1.4;
+  }
+
+  .lang-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 28px;
+  }
+
+  .lang-badge {
+    padding: 5px 14px;
+    border: 1px solid rgba(201,150,47,0.3);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    background: rgba(201,150,47,0.06);
+  }
+
+  /* ─────────────────────────────────────────
+     PAGE 4 — HOW IT WORKS
+  ───────────────────────────────────────── */
+  .p4 {
+    height: 520px;
+    background: var(--khadi);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .p4-header {
+    background: var(--brown);
+    padding: 32px 52px 28px;
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    position: relative;
+  }
+
+  .p4-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--saffron) 0%, transparent 100%);
+  }
+
+  .p4-header .section-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--saffron);
+    text-transform: uppercase;
+  }
+
+  .p4-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--khadi);
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: calc(100% - 100px);
+    position: relative;
+  }
+
+  .step-col {
+    padding: 36px 28px;
+    border-right: 1px solid rgba(61,43,15,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+  }
+
+  .step-col:last-child { border-right: none; }
+
+  .step-col::before {
+    content: '';
+    position: absolute;
+    top: 44px; right: -1px;
+    width: 20px; height: 2px;
+    background: var(--saffron);
+    opacity: 0;
+  }
+
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: rgba(232,114,42,0.12);
+    line-height: 1;
+    position: absolute;
+    top: 20px; right: 16px;
+  }
+
+  .step-icon {
+    font-size: 28px;
+    margin-bottom: 4px;
+  }
+
+  .step-col h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--saffron);
+  }
+
+  .step-col h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--brown);
+    line-height: 1.25;
+  }
+
+  .step-col p {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.75;
+  }
+
+  .connector-line {
+    position: absolute;
+    top: 70px; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--saffron) 0%, rgba(232,114,42,0.1) 100%);
+    opacity: 0.2;
+  }
+
+  /* ─────────────────────────────────────────
+     PAGE 5 — IMPACT / VISION
+  ───────────────────────────────────────── */
+  .p5 {
+    height: 520px;
+    background: var(--deep);
+    display: grid;
+    grid-template-rows: 1fr auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .p5-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(232,114,42,0.1) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(201,150,47,0.07) 0%, transparent 60%);
+  }
+
+  .p5-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    z-index: 2;
+  }
+
+  .p5-left {
+    padding: 52px 44px;
+    border-right: 1px solid rgba(232,114,42,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .p5-left .section-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .p5-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 900;
+    color: var(--khadi);
+    line-height: 1.15;
+    margin-bottom: 24px;
+  }
+
+  .p5-left h2 em { color: var(--saffron); font-style: italic; }
+
+  .stat-row {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 28px;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .stat .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--saffron);
+    line-height: 1;
+  }
+
+  .stat .lbl {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(245,237,216,0.5);
+    text-transform: uppercase;
+  }
+
+  .p5-left p {
+    font-size: 14px;
+    color: rgba(245,237,216,0.6);
+    line-height: 1.8;
+  }
+
+  .p5-right {
+    padding: 52px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .impact-card {
+    background: rgba(232,114,42,0.06);
+    border: 1px solid rgba(232,114,42,0.15);
+    padding: 18px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .impact-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+
+  .impact-card h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--saffron-light);
+    margin-bottom: 4px;
+  }
+
+  .impact-card p {
+    font-size: 13px;
+    color: rgba(245,237,216,0.6);
+    line-height: 1.65;
+  }
+
+  .p5-footer {
+    background: rgba(232,114,42,0.08);
+    border-top: 1px solid rgba(232,114,42,0.15);
+    padding: 16px 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+  }
+
+  .p5-footer p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(245,237,216,0.5);
+  }
+
+  .p5-footer .attr {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--saffron);
+    text-transform: uppercase;
+  }
+
+  /* ─────────────────────────────────────────
+     PAGE 6 — CTA / BACK COVER
+  ───────────────────────────────────────── */
+  .p6 {
+    height: 520px;
+    background: var(--brown);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .p6-left {
+    padding: 52px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .p6-left .section-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .p6-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--khadi);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .p6-left h2 em { color: var(--saffron); }
+
+  .p6-left p {
+    font-size: 14.5px;
+    color: rgba(245,237,216,0.65);
+    line-height: 1.85;
+    margin-bottom: 36px;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--saffron);
+    color: var(--deep);
+    padding: 14px 28px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    width: fit-content;
+    cursor: pointer;
+    border: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.1);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .cta-btn:hover::after { transform: translateX(0); }
+
+  .contact-row {
+    display: flex;
+    gap: 24px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .contact-item .lbl {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .contact-item .val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: rgba(245,237,216,0.7);
+  }
+
+  .p6-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    position: relative;
+    z-index: 2;
+    gap: 0;
+  }
+
+  .gandhi-emblem {
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,114,42,0.15) 0%, transparent 70%);
+    border: 2px solid rgba(232,114,42,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 24px;
+  }
+
+  .gandhi-emblem::before {
+    content: '';
+    position: absolute;
+    inset: -14px;
+    border-radius: 50%;
+    border: 1px dashed rgba(232,114,42,0.15);
+  }
+
+  .gandhi-emblem .spin-ring {
+    position: absolute;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--saffron);
+    border-top-color: transparent;
+    animation: spin 8s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .charkha { font-size: 80px; }
+
+  .museum-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--khadi);
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .museum-city {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--saffron-light);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .p6-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(245,237,216,0.4);
+    text-align: center;
+    line-height: 1.6;
+    padding: 0 20px;
+  }
+
+  .deco-corner {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle at 100% 100%, rgba(232,114,42,0.12) 0%, transparent 60%);
+  }
+
+  /* ─── PAGE LABELS ─── */
+  .page-num {
+    position: absolute;
+    bottom: 14px;
+    right: 20px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    opacity: 0.3;
+    text-transform: uppercase;
+  }
+
+  .page-num-light { color: var(--khadi); }
+  .page-num-dark { color: var(--brown); }
+
+  /* Print */
+  @media print {
+    body { background: white; padding: 0; gap: 0; }
+    .page { box-shadow: none; page-break-after: always; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     PAGE 1 — COVER
+══════════════════════════════════════ -->
+<div class="page p1">
+  <div class="p1-left">
+    <!-- Gandhi Museum atmospheric image placeholder with gradient -->
+    <div style="width:100%;height:100%;background:linear-gradient(160deg,#3D2B0F 0%,#1A1008 50%,#2A1A08 100%);display:flex;align-items:center;justify-content:center;position:relative;">
+      <div style="font-size:90px;opacity:0.15;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">🏛️</div>
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,114,42,0.2),transparent 60%)"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:50%;background:linear-gradient(to top,#1A1008,transparent)"></div>
+    </div>
+    <div class="p1-left-overlay"></div>
+    <div class="p1-left-text">
+      <span class="tag">Rajkot Heritage Initiative</span>
+      <h1>Gandhi<br><em>Museum</em><br>Rajkot</h1>
+    </div>
+  </div>
+  <div class="p1-right">
+    <span class="eyebrow">Immersive Technology · Heritage</span>
+    <h2>History You Can<br><em>Step Into</em></h2>
+    <p>A next-generation VR experience bringing Gandhi Ji's journey alive — accessible to every visitor, in every language, at every age.</p>
+    <div class="badge-vr">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="20" height="10" rx="3"/><circle cx="8.5" cy="13" r="1.5"/><circle cx="15.5" cy="13" r="1.5"/><path d="M2 13h2M20 13h2"/></svg>
+      Virtual Reality Experience
+    </div>
+  </div>
+  <div class="langs-strip">
+    <span>Hindi</span><div class="dot"></div>
+    <span>Gujarati</span><div class="dot"></div>
+    <span>English</span><div class="dot"></div>
+    <span>Marathi</span><div class="dot"></div>
+    <span>Tamil</span><div class="dot"></div>
+    <span>Bengali</span><div class="dot"></div>
+    <span>+ More</span>
+  </div>
+  <div class="page-num page-num-light">01 / 06</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 2 — THE PROBLEM / INSIGHT
+══════════════════════════════════════ -->
+<div class="page p2">
+  <div class="p2-left">
+    <span class="section-label">The Challenge</span>
+    <h2>Some Stories<br>Are Too Big<br>to Walk Past</h2>
+    <p>Many elderly visitors and people with mobility challenges find it difficult to fully experience a sprawling museum. Language barriers further limit their connection with history.</p>
+    <div class="highlight-line">
+      "Every visitor deserves to feel the full weight of Gandhi Ji's journey — not just read about it."
+    </div>
+  </div>
+  <div class="p2-right">
+    <div class="insight-card">
+      <div class="insight-num">01</div>
+      <div>
+        <h4>Mobility Barriers</h4>
+        <p>Elderly & differently-abled visitors often cannot explore the full museum layout comfortably.</p>
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-num">02</div>
+      <div>
+        <h4>Language Gap</h4>
+        <p>Visitors from across India and abroad miss deeper context due to language limitations in exhibits.</p>
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-num">03</div>
+      <div>
+        <h4>Passive Experience</h4>
+        <p>Traditional displays tell — they don't immerse. Younger generations disengage quickly.</p>
+      </div>
+    </div>
+  </div>
+  <div class="page-num page-num-dark">02 / 06</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 3 — VR SOLUTION
+══════════════════════════════════════ -->
+<div class="page p3">
+  <div class="p3-bg-circle"></div>
+  <div class="p3-bg-circle2"></div>
+  <div class="p3-left">
+    <span class="section-label">Our Solution</span>
+    <h2>Wear the <span>Headset.</span><br>Live the History.</h2>
+    <p class="sub">VR technology transforms the museum visit into a living, breathing journey through Gandhi Ji's life — from Rajkot's streets to Dandi.</p>
+    <div class="feature-list">
+      <div class="feat-item">
+        <div class="feat-icon">🌐</div>
+        <p><strong>Multilanguage Audio</strong>Available in 10+ Indian & international languages — same headset, your language.</p>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">♿</div>
+        <p><strong>Seated Experience</strong>Fully accessible — designed for elderly, wheelchair users & all visitors.</p>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">🎬</div>
+        <p><strong>Cinematic 360° Video</strong>Historically accurate reconstructions of key moments & places.</p>
+      </div>
+    </div>
+  </div>
+  <div class="p3-right">
+    <div class="vr-visual">
+      <div class="vr-icon">🥽</div>
+      <div class="vr-label">360° Immersive<br>Gandhi Experience</div>
+    </div>
+    <div class="lang-badges">
+      <div class="lang-badge">हिन्दी</div>
+      <div class="lang-badge">ગુજરાતી</div>
+      <div class="lang-badge">English</div>
+      <div class="lang-badge">मराठी</div>
+      <div class="lang-badge">தமிழ்</div>
+      <div class="lang-badge">বাংলা</div>
+    </div>
+  </div>
+  <div class="page-num page-num-light">03 / 06</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 4 — HOW IT WORKS
+══════════════════════════════════════ -->
+<div class="page p4">
+  <div class="p4-header">
+    <span class="section-label">Process</span>
+    <h2>How the Experience Works</h2>
+  </div>
+  <div class="steps-grid">
+    <div class="connector-line"></div>
+    <div class="step-col">
+      <div class="step-num">1</div>
+      <div class="step-icon">🎟️</div>
+      <h4>Step 01</h4>
+      <h3>Arrive &<br>Check In</h3>
+      <p>Visitor arrives at the museum VR desk. Staff assist with headset fitting & language selection.</p>
+    </div>
+    <div class="step-col">
+      <div class="step-num">2</div>
+      <div class="step-icon">🌍</div>
+      <h4>Step 02</h4>
+      <h3>Choose<br>Your Language</h3>
+      <p>Select from Hindi, Gujarati, English, Tamil, Bengali & more — audio narration switches instantly.</p>
+    </div>
+    <div class="step-col">
+      <div class="step-num">3</div>
+      <div class="step-icon">🥽</div>
+      <h4>Step 03</h4>
+      <h3>Enter the<br>Experience</h3>
+      <p>20–30 minute immersive VR journey through Gandhi Ji's life, historically recreated in 360°.</p>
+    </div>
+    <div class="step-col">
+      <div class="step-num">4</div>
+      <div class="step-icon">🌟</div>
+      <h4>Step 04</h4>
+      <h3>Reflect &<br>Explore</h3>
+      <p>Return to the museum with a new perspective. Deeper context for every exhibit they just lived.</p>
+    </div>
+  </div>
+  <div class="page-num page-num-dark">04 / 06</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 5 — IMPACT / VISION
+══════════════════════════════════════ -->
+<div class="page p5">
+  <div class="p5-bg"></div>
+  <div class="p5-content">
+    <div class="p5-left">
+      <span class="section-label">Impact & Vision</span>
+      <h2>Making Gandhi Ji<br><em>Accessible</em><br>to All of India</h2>
+      <div class="stat-row">
+        <div class="stat"><span class="num">10+</span><span class="lbl">Languages</span></div>
+        <div class="stat"><span class="num">360°</span><span class="lbl">Immersion</span></div>
+        <div class="stat"><span class="num">100%</span><span class="lbl">Accessible</span></div>
+      </div>
+      <p>Technology that respects heritage. A solution that ensures no visitor — young or old, mobile or otherwise — leaves without truly experiencing the Mahatma's legacy.</p>
+    </div>
+    <div class="p5-right">
+      <div class="impact-card">
+        <div class="impact-icon">👴</div>
+        <div>
+          <h4>Elderly Visitors</h4>
+          <p>Seated VR experience covers the entire museum journey without physical strain.</p>
+        </div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-icon">🧑‍🎓</div>
+        <div>
+          <h4>Student Groups</h4>
+          <p>School & college groups engage with history in a format that resonates with their generation.</p>
+        </div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-icon">🌏</div>
+        <div>
+          <h4>International Tourists</h4>
+          <p>Foreign visitors experience Gandhi Ji's story in their native language for the first time.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="p5-footer">
+    <p>"Be the change you wish to see in the world."</p>
+    <span class="attr">— Mahatma Gandhi</span>
+  </div>
+  <div class="page-num page-num-light">05 / 06</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 6 — BACK COVER / CTA
+══════════════════════════════════════ -->
+<div class="page p6">
+  <div class="p6-left">
+    <span class="section-label">Get Involved</span>
+    <h2>Bring This<br><em>Vision</em><br>to Life</h2>
+    <p>We are seeking institutional support, museum partnerships, and technology collaborators to pilot this VR experience at Gandhi Museum, Rajkot.</p>
+    <button class="cta-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+      Partner With Us
+    </button>
+    <div class="contact-row">
+      <div class="contact-item">
+        <span class="lbl">Museum</span>
+        <span class="val">Gandhi Museum, Rajkot</span>
+      </div>
+      <div class="contact-item">
+        <span class="lbl">Initiative By</span>
+        <span class="val">College VR Research Team</span>
+      </div>
+    </div>
+  </div>
+  <div class="p6-right">
+    <div class="gandhi-emblem">
+      <div class="spin-ring"></div>
+      <div class="charkha">🕊️</div>
+    </div>
+    <div class="museum-name">Gandhi Museum</div>
+    <div class="museum-city">Rajkot · Gujarat · India</div>
+    <div class="p6-tagline">Preserving the past.<br>Reimagining how we experience it.</div>
+  </div>
+  <div class="deco-corner"></div>
+  <div class="page-num page-num-light">06 / 06</div>
+</div>
+<style>
+    .p7-booking {
+      height: 520px;
+      background: var(--khadi);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+      position: relative;
+      border-top: 4px solid var(--saffron);
+    }
+  
+    .p7-content-box {
+      max-width: 600px;
+      border: 1px solid var(--khadi-dark);
+      padding: 50px 30px;
+      background: rgba(255,255,255,0.4);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+      border-radius: 4px;
+    }
+  
+    .p7-booking h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--brown);
+      margin-bottom: 15px;
+    }
+  
+    .p7-booking p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      color: var(--text-mid);
+      line-height: 1.6;
+      margin-bottom: 35px;
+    }
+  
+    .fill-form-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      background: var(--saffron);
+      color: white;
+      padding: 18px 40px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 20px rgba(232, 114, 42, 0.2);
+    }
+  
+    .fill-form-btn:hover {
+      background: var(--brown);
+      transform: translateY(-3px);
+    }
+  
+    /* Arrow Animation */
+    .fill-form-btn span {
+      transition: transform 0.3s ease;
+    }
+    .fill-form-btn:hover span {
+      transform: translateX(8px);
+    }
+  </style>
+  
+  <div class="page p7-booking">
+    <div class="p7-content-box">
+      <div style="font-size: 50px; margin-bottom: 15px;">🥽</div>
+      <span class="section-label" style="color: var(--saffron); letter-spacing: 6px; display: block; margin-bottom: 10px;">Reserve Your Spot</span>
+      <h2>Ready to Witness History?</h2>
+      <p>
+        <strong>OUR VR SLOT ARE LIMITED TO CONFORM YOUR TIMING</strong>, PLESE CLICK THE BUTTON BELOW AND FILL OUT THE FORM
+      </p>
+  
+      <a href="1index.html" target="_blank" class="fill-form-btn">
+  FILL BOOKING FORM <span>→</span>
+</a>
+    </div>
+  
+    <div class="page-num page-num-dark">07 / 07</div>
+  </div>
+
+</body>
+</html>
